@@ -2,6 +2,10 @@
 
 PurSys est une suite logicielle desktop d'ingénierie système conçue pour l'optimisation des performances, le nettoyage des résidus temporaires et la gestion fine du démarrage sur systèmes d'exploitation modernes (Windows, Linux, macOS).
 
+<p align="center">
+  <img src="assets/pursys-dashboard.png" alt="PurSys Dashboard Interface" width="100%" />
+</p>
+
 ---
 
 ## 🏗️ Architecture Technique
