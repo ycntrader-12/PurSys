@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PurSys - System Maintenance & Performance Optimizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Custom Desktop Window Shell -->
+  <div class="app-shell">
+    <!-- Window Drag Region & Title Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <span class="brand-name">PurSys</span>
+        <span class="brand-tag">v1.0.0-CORE</span>
+      </div>
+
+      <div class="header-status">
+        <div class="engine-indicator">
+          <span class="pulse-dot"></span>
+          <span id="engine-label">Rust Core: Active</span>
+        </div>
+        <div id="license-badge" class="badge badge-free">
+          <span class="badge-icon">●</span>
+          <span id="license-tier-text">FREE EDITION</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <div class="app-body">
+      <!-- Sidebar Navigation -->
+      <nav class="sidebar">
+        <div class="nav-group">
+          <span class="nav-group-title">SYSTEM</span>
+          <button class="nav-item active" data-view="dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Dashboard</span>
+          </button>
+          <button class="nav-item" data-view="cleaner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              <line x1="10" y1="11" x2="10" y2="17"></line>
+              <line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+            <span>Deep Cleaner</span>
+          </button>
+          <button class="nav-item" data-view="optimizer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 20V10"></path>
+              <path d="M12 20V4"></path>
+              <path d="M6 20v-6"></path>
+            </svg>
+            <span>Memory Optimizer</span>
+          </button>
+          <button class="nav-item" data-view="startup">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>Startup Apps</span>
+          </button>
+        </div>
+
+        <div class="nav-group">
+          <span class="nav-group-title">COMMERCE & AUDIT</span>
+          <button class="nav-item" data-view="licensing">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span>License & Pro</span>
+          </button>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="sys-summary">
+            <div class="summary-line">
+              <span class="lbl">Platform:</span>
+              <span id="summary-platform" class="val">Detecting...</span>
+            </div>
+            <div class="summary-line">
+              <span class="lbl">Privileges:</span>
+              <span id="summary-privilege" class="val">Standard</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Viewport Stage -->
+      <main class="viewport">
+        <!-- VIEW: DASHBOARD -->
+        <section id="view-dashboard" class="view active">
+          <div class="view-header">
+            <div>
+              <h1 class="view-title">System Overview</h1>
+              <p class="view-subtitle">Real-time performance analytics & health monitoring</p>
+            </div>
+            <button id="btn-quick-clean" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+              </svg>
+              <span>1-Click Quick Clean</span>
+            </button>
+          </div>
+
+          <!-- Top Metrics Bar -->
+          <div class="metrics-grid">
+            <!-- CPU Gauge Card -->
+            <div class="card metric-card">
+              <div class="card-header">
+                <span class="card-title">Processor Utilization</span>
+                <span class="metric-trend" id="cpu-trend">Active</span>
+              </div>
+              <div class="gauge-wrapper">
+                <svg class="radial-gauge" viewBox="0 0 120 120">
+                  <circle class="gauge-bg" cx="60" cy="60" r="50"></circle>
+                  <circle id="cpu-gauge-circle" class="gauge-val" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314"></circle>
+                </svg>
+                <div class="gauge-center">
+                  <span id="cpu-percentage" class="gauge-num">0%</span>
+                  <span class="gauge-unit">Global Load</span>
+                </div>
+              </div>
+              <div class="card-meta">
+                <span>Multi-threaded Monitor</span>
+                <span id="process-count">0 processes</span>
+              </div>
+            </div>
+
+            <!-- RAM Gauge Card -->
+            <div class="card metric-card">
+              <div class="card-header">
+                <span class="card-title">Memory Allocation</span>
+                <span class="metric-trend" id="ram-trend">Stable</span>
+              </div>
+              <div class="gauge-wrapper">
+                <svg class="radial-gauge" viewBox="0 0 120 120">
+                  <circle class="gauge-bg" cx="60" cy="60" r="50"></circle>
+                  <circle id="ram-gauge-circle" class="gauge-val gauge-cyan" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="314"></circle>
+                </svg>
+                <div class="gauge-center">
+                  <span id="ram-percentage" class="gauge-num">0%</span>
+                  <span class="gauge-unit">RAM Used</span>
+                </div>
+              </div>
+              <div class="card-meta">
+                <span id="ram-used-text">0 GB Used</span>
+                <span id="ram-avail-text">0 GB Total</span>
+              </div>
+            </div>
+
+            <!-- Health Score Card -->
+            <div class="card metric-card health-card">
+              <div class="card-header">
+                <span class="card-title">System Health Score</span>
+                <span class="health-status-badge" id="health-status-badge">Good</span>
+              </div>
+              <div class="health-display">
+                <div class="health-score" id="health-score-val">94</div>
+                <div class="health-details">
+                  <p class="health-lead">Optimization Recommended</p>
+                  <p class="health-sub">No critical process bottlenecks identified. Temporary files can be reclaimed.</p>
+                </div>
+              </div>
+              <div class="card-actions">
+                <button class="btn btn-secondary btn-sm" id="btn-goto-cleaner">Review Cleanable Items</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Host Specifications Banner -->
+          <div class="card sysinfo-card">
+            <div class="sysinfo-item">
+              <span class="sys-label">Operating System</span>
+              <span id="info-os" class="sys-value">Windows 11 x64</span>
+            </div>
+            <div class="sysinfo-item">
+              <span class="sys-label">Host Node</span>
+              <span id="info-host" class="sys-value">PURSYS-DESKTOP</span>
+            </div>
+            <div class="sysinfo-item">
+              <span class="sys-label">Kernel Thread-Pool</span>
+              <span id="info-threads" class="sys-value">Rayon Active</span>
+            </div>
+            <div class="sysinfo-item">
+              <span class="sys-label">Licensing Boundary</span>
+              <span id="info-tier" class="sys-value">Hardware Bound (Ed25519)</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW: DEEP CLEANER -->
+        <section id="view-cleaner" class="view">
+          <div class="view-header">
+            <div>
+              <h1 class="view-title">System Deep Cleaner</h1>
+              <p class="view-subtitle">Safe temporary files & cache purging with symlink and TOCTOU protection</p>
+            </div>
+            <div class="header-actions">
+              <button id="btn-clean-scan" class="btn btn-secondary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <span>Analyze System</span>
+              </button>
+              <button id="btn-clean-execute" class="btn btn-primary" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <span>Clean Selected Files</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Total Cleanable Summary Banner -->
+          <div class="clean-summary-bar">
+            <div class="summary-metric">
+              <span class="metric-title">Cleanable Space Found</span>
+              <span id="clean-total-size" class="metric-highlight">0.00 MB</span>
+            </div>
+            <div class="summary-metric">
+              <span class="metric-title">Files Flagged</span>
+              <span id="clean-total-files" class="metric-sub">0 files identified</span>
+            </div>
+            <div class="summary-progress-wrapper">
+              <div id="clean-progress-bar" class="clean-progress"></div>
+            </div>
+          </div>
+
+          <!-- Categories List -->
+          <div class="categories-container" id="categories-container">
+            <!-- Category Item 1: User Temp -->
+            <div class="category-card" data-cat="user_temp">
+              <div class="cat-left">
+                <label class="custom-check">
+                  <input type="checkbox" checked value="user_temp">
+                  <span class="checkmark"></span>
+                </label>
+                <div class="cat-info">
+                  <span class="cat-name">User Temporary Files (%TEMP%)</span>
+                  <span class="cat-desc">Application scratch files, unfinished installers, and session dumps</span>
+                </div>
+              </div>
+              <div class="cat-right">
+                <span class="cat-stats" id="stat-user_temp">-- MB</span>
+                <span class="tag tag-free">FREE</span>
+              </div>
+            </div>
+
+            <!-- Category Item 2: System Temp (PRO) -->
+            <div class="category-card pro-locked" data-cat="system_temp">
+              <div class="cat-left">
+                <label class="custom-check">
+                  <input type="checkbox" value="system_temp">
+                  <span class="checkmark"></span>
+                </label>
+                <div class="cat-info">
+                  <span class="cat-name">Windows System Temp & Prefetch</span>
+                  <span class="cat-desc">OS update remnants, error reporting archives, and system spool cache</span>
+                </div>
+              </div>
+              <div class="cat-right">
+                <span class="cat-stats" id="stat-system_temp">-- MB</span>
+                <span class="tag tag-pro">PRO ONLY</span>
+              </div>
+            </div>
+
+            <!-- Category Item 3: Browser Caches -->
+            <div class="category-card" data-cat="browser_cache">
+              <div class="cat-left">
+                <label class="custom-check">
+                  <input type="checkbox" checked value="browser_cache">
+                  <span class="checkmark"></span>
+                </label>
+                <div class="cat-info">
+                  <span class="cat-name">Web Browser Caches</span>
+                  <span class="cat-desc">Google Chrome, Microsoft Edge, Brave, and Mozilla Firefox web cache</span>
+                </div>
+              </div>
+              <div class="cat-right">
+                <span class="cat-stats" id="stat-browser_cache">-- MB</span>
+                <span class="tag tag-free">FREE</span>
+              </div>
+            </div>
+
+            <!-- Category Item 4: Crash Logs -->
+            <div class="category-card" data-cat="crash_logs">
+              <div class="cat-left">
+                <label class="custom-check">
+                  <input type="checkbox" checked value="crash_logs">
+                  <span class="checkmark"></span>
+                </label>
+                <div class="cat-info">
+                  <span class="cat-name">Crash Dumps & Application Error Logs</span>
+                  <span class="cat-desc">WER diagnostic reports, legacy .dmp files, and crash stack traces</span>
+                </div>
+              </div>
+              <div class="cat-right">
+                <span class="cat-stats" id="stat-crash_logs">-- MB</span>
+                <span class="tag tag-free">FREE</span>
+              </div>
+            </div>
+
+            <!-- Category Item 5: Thumbnail Cache (PRO) -->
+            <div class="category-card pro-locked" data-cat="thumbnail_cache">
+              <div class="cat-left">
+                <label class="custom-check">
+                  <input type="checkbox" value="thumbnail_cache">
+                  <span class="checkmark"></span>
+                </label>
+                <div class="cat-info">
+                  <span class="cat-name">Explorer Thumbnail & Icon Databases</span>
+                  <span class="cat-desc">Corrupted Windows explorer thumbcache_*.db files and icon buffers</span>
+                </div>
+              </div>
+              <div class="cat-right">
+                <span class="cat-stats" id="stat-thumbnail_cache">-- MB</span>
+                <span class="tag tag-pro">PRO ONLY</span>
+              </div>
+            </div>
+
+            <!-- Category Item 6: Recycle Bin -->
+            <div class="category-card" data-cat="recycle_bin">
+              <div class="cat-left">
+                <label class="custom-check">
+                  <input type="checkbox" checked value="recycle_bin">
+                  <span class="checkmark"></span>
+                </label>
+                <div class="cat-info">
+                  <span class="cat-name">Recycle Bin & Trash</span>
+                  <span class="cat-desc">All user deleted files awaiting final purge on drive C:</span>
+                </div>
+              </div>
+              <div class="cat-right">
+                <span class="cat-stats" id="stat-recycle_bin">-- MB</span>
+                <span class="tag tag-free">FREE</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW: MEMORY OPTIMIZER -->
+        <section id="view-optimizer" class="view">
+          <div class="view-header">
+            <div>
+              <h1 class="view-title">Memory & RAM Optimizer</h1>
+              <p class="view-subtitle">Native working set compaction & process heap recovery</p>
+            </div>
+            <button id="btn-flush-ram" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+              <span>Flush Working Set (RAM)</span>
+            </button>
+          </div>
+
+          <div class="ram-overview-grid">
+            <div class="card ram-visual-card">
+              <div class="card-header">
+                <span class="card-title">Physical RAM Allocation</span>
+                <span class="tag tag-pro">PRO OPTIMIZATION</span>
+              </div>
+              <div class="ram-bar-container">
+                <div class="ram-bar">
+                  <div id="ram-bar-used" class="bar-segment bar-used" style="width: 45%;"></div>
+                  <div id="ram-bar-avail" class="bar-segment bar-avail" style="width: 55%;"></div>
+                </div>
+                <div class="ram-legend">
+                  <div class="legend-item"><span class="legend-dot dot-used"></span><span>Active Memory: <strong id="lbl-ram-used">-- GB</strong></span></div>
+                  <div class="legend-item"><span class="legend-dot dot-avail"></span><span>Available: <strong id="lbl-ram-avail">-- GB</strong></span></div>
+                  <div class="legend-item"><span class="legend-dot dot-total"></span><span>Total Installed: <strong id="lbl-ram-total">-- GB</strong></span></div>
+                </div>
+              </div>
+              <p class="card-description">
+                Using zero-cost abstractions and Windows native sys-calls (`EmptyWorkingSet`), PurSys forces idle background processes to release uncommitted page frames back to the OS memory manager.
+              </p>
+            </div>
+          </div>
+
+          <!-- Optimization Log / Results -->
+          <div class="card log-card">
+            <div class="card-header">
+              <span class="card-title">Memory Reclamation Audit Log</span>
+              <span class="log-status" id="ram-log-status">Ready</span>
+            </div>
+            <div class="terminal-log" id="ram-log-output">
+              <p class="log-line text-muted">[System] Monitoring kernel memory allocation tables...</p>
+              <p class="log-line text-cyan">[PurSys] Ready to perform native working set compaction.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW: STARTUP MANAGER -->
+        <section id="view-startup" class="view">
+          <div class="view-header">
+            <div>
+              <h1 class="view-title">Startup Applications Manager</h1>
+              <p class="view-subtitle">Non-destructive boot optimization with safe registry redirection</p>
+            </div>
+            <button id="btn-refresh-startup" class="btn btn-secondary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+              <span>Refresh Entries</span>
+            </button>
+          </div>
+
+          <div class="card table-card">
+            <div class="startup-table-wrapper">
+              <table class="startup-table">
+                <thead>
+                  <tr>
+                    <th>Application Name</th>
+                    <th>Launch Path / Command</th>
+                    <th>Registry Scope</th>
+                    <th>Boot Impact</th>
+                    <th class="text-right">Auto-Start</th>
+                  </tr>
+                </thead>
+                <tbody id="startup-list-body">
+                  <tr>
+                    <td colspan="5" class="text-center text-muted">Loading autostart registry keys...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW: LICENSING & FREEMIUM -->
+        <section id="view-licensing" class="view">
+          <div class="view-header">
+            <div>
+              <h1 class="view-title">Licensing & Hardware Identity</h1>
+              <p class="view-subtitle">Cryptographic token validation (Ed25519) and Freemium feature gating</p>
+            </div>
+          </div>
+
+          <div class="licensing-grid">
+            <!-- Machine HWID Card -->
+            <div class="card hwid-card">
+              <div class="card-header">
+                <span class="card-title">Hardware Machine Fingerprint (HWID)</span>
+                <span class="tag tag-secure">SHA-256 SECURED</span>
+              </div>
+              <p class="card-description">
+                PurSys builds a unique cryptographic hash from your machine GUID and hardware architecture. License tokens are mathematically bound to this machine.
+              </p>
+              <div class="hwid-box">
+                <code id="hwid-value">Computing hardware fingerprint...</code>
+                <button id="btn-copy-hwid" class="btn btn-secondary btn-sm" title="Copy HWID to Clipboard">
+                  Copy
+                </button>
+              </div>
+            </div>
+
+            <!-- License Activation Card -->
+            <div class="card activation-card">
+              <div class="card-header">
+                <span class="card-title">Activate PurSys Professional</span>
+                <span id="lic-tier-pill" class="tag tag-free">FREE ACTIVE</span>
+              </div>
+              <div class="form-group">
+                <label for="license-input">Cryptographic License Token</label>
+                <div class="input-with-btn">
+                  <input type="text" id="license-input" placeholder="e.g. PUR-PRO-XXXX-XXXX" spellcheck="false" autocomplete="off">
+                  <button id="btn-activate-lic" class="btn btn-primary">Activate</button>
+                </div>
+                <span class="form-hint">Enter your cryptographically signed activation token or use the test key <code>PUR-PRO-DEMO-2026</code>.</span>
+              </div>
+              <div class="activation-result" id="activation-result" style="display: none;">
+                <p id="activation-msg" class="result-text"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature Matrix -->
+          <div class="card matrix-card">
+            <div class="card-header">
+              <span class="card-title">PurSys Editions Feature Matrix</span>
+            </div>
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Feature Capability</th>
+                  <th>Free Edition</th>
+                  <th>Pro Edition</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>User Temp & Browser Cache Cleaning</td>
+                  <td class="feature-included">✓ Included</td>
+                  <td class="feature-included">✓ Included</td>
+                </tr>
+                <tr>
+                  <td>Real-time CPU & RAM Performance Analytics</td>
+                  <td class="feature-included">✓ Included</td>
+                  <td class="feature-included">✓ Included</td>
+                </tr>
+                <tr>
+                  <td>Deep Windows System Temp & Prefetch Cleaning</td>
+                  <td class="feature-restricted">✗ Pro Only</td>
+                  <td class="feature-included">✓ Included</td>
+                </tr>
+                <tr>
+                  <td>Explorer Thumbnail & Icon Cache Reset</td>
+                  <td class="feature-restricted">✗ Pro Only</td>
+                  <td class="feature-included">✓ Included</td>
+                </tr>
+                <tr>
+                  <td>Native Working Set RAM Compactor (`EmptyWorkingSet`)</td>
+                  <td class="feature-restricted">✗ Pro Only</td>
+                  <td class="feature-included">✓ Included</td>
+                </tr>
+                <tr>
+                  <td>Startup Registry Optimization & Safe Toggle</td>
+                  <td class="feature-restricted">✗ Pro Only</td>
+                  <td class="feature-included">✓ Included</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- PRO UPGRADE MODAL -->
+  <div class="modal-backdrop" id="pro-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-tag">PRO FEATURE REQUIRED</div>
+        <button class="modal-close" id="btn-close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <h3 class="modal-title" id="modal-feature-title">Feature Restricted</h3>
+        <p class="modal-desc" id="modal-feature-desc">
+          This operation requires deep system access and is protected by the PurSys Rust Core Freemium guard.
+        </p>
+        <div class="modal-quick-activation">
+          <p class="quick-text">Quick Unlock Demo: Click below to apply demo PRO key <code>PUR-PRO-DEMO-2026</code></p>
+          <button id="btn-quick-unlock-pro" class="btn btn-primary btn-block">Unlock Pro Edition Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Application Logic Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/cleaner.js"></script>
+  <script src="js/optimizer.js"></script>
+  <script src="js/startup.js"></script>
+  <script src="js/licensing.js"></script>
+</body>
+</html>

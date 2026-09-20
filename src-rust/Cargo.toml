@@ -1,0 +1,33 @@
+[package]
+name = "pursys-core"
+version = "1.0.0"
+edition = "2021"
+authors = ["PurSys Architecture Team"]
+description = "Core native engine for PurSys system maintenance desktop application"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+rayon = "1.10"
+walkdir = "2.5"
+ed25519-dalek = { version = "2.1", default-features = false, features = ["alloc"] }
+sha2 = "0.10"
+sysinfo = "0.33"
+chrono = { version = "0.4", features = ["serde"] }
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.52"
+windows-sys = { version = "0.59", features = [
+    "Win32_System_ProcessStatus",
+    "Win32_System_Threading",
+    "Win32_System_SystemInformation",
+    "Win32_Foundation",
+    "Win32_UI_Shell"
+] }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true

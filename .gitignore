@@ -1,0 +1,30 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Rust build artifacts
+target/
+src-rust/target/
+**/*.rs.bk
+
+# Electron packaging & installers
+dist/
+dist-installer/
+*.exe
+*.msi
+*.zip
+*.dmg
+*.blockmap
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.log
+
+# IDE & Editor files
+.vscode/
+.idea/

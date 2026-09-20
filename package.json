@@ -1,0 +1,69 @@
+{
+  "name": "pursys",
+  "version": "1.0.0",
+  "description": "PurSys - Modular Cross-Platform Desktop System Maintenance & Optimization Utility",
+  "main": "src-electron/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "test": "node tests/test-bridge.js",
+    "dist": "electron-builder --win nsis",
+    "build:installer": "electron-builder --win nsis",
+    "build:rust": "cargo build --manifest-path src-rust/Cargo.toml --release",
+    "test:rust": "cargo test --manifest-path src-rust/Cargo.toml"
+  },
+  "build": {
+    "appId": "io.pursys.desktop",
+    "productName": "PurSys",
+    "copyright": "Copyright © 2026 PurSys Architecture Team",
+    "directories": {
+      "output": "dist-installer"
+    },
+    "files": [
+      "package.json",
+      "src-electron/**/*",
+      "src-ui/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "PurSys",
+      "uninstallDisplayName": "PurSys Maintenance Suite",
+      "include": "build/installer.nsh"
+    }
+  },
+  "keywords": [
+    "system-maintenance",
+    "cleaner",
+    "optimizer",
+    "electron",
+    "rust",
+    "freemium"
+  ],
+  "author": "PurSys Architecture Team",
+  "license": "Proprietary",
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^26.15.3"
+  }
+}
